@@ -18,17 +18,13 @@ namespace CatalogService.Domain.Responses
         public Response(
             TData? data,
             int code = 200,
-            string? message = null,
-            IEnumerable<string>? validationErrors = null)
+            string? message = null)
         {
             Data = data;
             Message = message;
             _code = code;
-            ValidationErrors = validationErrors;
         }
 
-        [JsonPropertyName("Errors")]
-        public IEnumerable<string>? ValidationErrors { get; set; }
         public TData? Data { get; set; }
         public string? Message { get; set; }
 

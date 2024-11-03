@@ -4,8 +4,9 @@ namespace CatalogService.API.DTOs
 {
     public class ProductDTO
     {
-        public ProductDTO(string name, string description, string image, DateTime createdAt, decimal price, int quantityInStock)
+        public ProductDTO(string id, string name, string description, string image, DateTime createdAt, decimal price, int quantityInStock)
         {
+            Id = id;
             Name = name;
             Description = description;
             Image = image;
@@ -14,6 +15,7 @@ namespace CatalogService.API.DTOs
             QuantityInStock = quantityInStock;
         }
 
+        public string Id { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
         public string Image { get; private set; }
@@ -25,6 +27,6 @@ namespace CatalogService.API.DTOs
             new(dto.Name, dto.Description, dto.Image, dto.Price, dto.QuantityInStock);
 
         public static ProductDTO MapFromEntity(Product entity) =>
-            new(entity.Name, entity.Description, entity.Image, entity.CreatedAt, entity.Price, entity.QuantityInStock);
+            new(entity.Id, entity.Name, entity.Description, entity.Image, entity.CreatedAt, entity.Price, entity.QuantityInStock);
     }
 }
