@@ -5,7 +5,7 @@ namespace CatalogService.API.Endpoints.ProductEndpoints
 {
     public class UpdateProductEndpoint : IEndpoint
     {
-        public static void Map(IEndpointRouteBuilder app) => app.MapPut("/{id}", HandleAsync).RequireAuthorization("Admin").Produces<IResult>();
+        public static void Map(IEndpointRouteBuilder app) => app.MapPut("/{id}", HandleAsync).RequireAuthorization("ADM").Produces<IResult>();
         public static async Task<IResult> HandleAsync(IProductService productService, ProductDTO productDTO, string id)
         {
             var product = ProductDTO.MapToEntity(productDTO);
