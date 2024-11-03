@@ -1,12 +1,11 @@
 ﻿using CatalogService.API.DTOs;
 using CatalogService.Domain.Services;
-using Microsoft.AspNetCore.Mvc;
 
 namespace CatalogService.API.Endpoints.ProductEndpoints
 {
     public class UpdateProductEndpoint : IEndpoint
     {
-        public static void Map(IEndpointRouteBuilder app) => app.MapPut("/{id}", HandleAsync).Produces<IResult>();
+        public static void Map(IEndpointRouteBuilder app) => app.MapPut("/{id}", HandleAsync).RequireAuthorization("Admin").Produces<IResult>();
         public static async Task<IResult> HandleAsync(IProductService productService, ProductDTO productDTO, string id)
         {
             var product = ProductDTO.MapToEntity(productDTO);

@@ -1,7 +1,4 @@
-﻿
-using CatalogService.API.DTOs;
-using CatalogService.API.Middlewares;
-using CatalogService.Domain.Responses;
+﻿using CatalogService.API.Middlewares;
 using CatalogService.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
