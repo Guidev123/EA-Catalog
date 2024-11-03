@@ -42,7 +42,6 @@ namespace CatalogService.API.Services
                 return new Response<Product>(null, 404);
 
             await _cacheService.SetAsync(id.ToString(), product);
-
             return new Response<Product>(cacheProduct, 200);
         }
 
