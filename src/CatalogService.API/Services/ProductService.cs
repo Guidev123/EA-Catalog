@@ -1,4 +1,5 @@
-﻿using CatalogService.Domain.Entities;
+﻿using CatalogService.API.DTOs;
+using CatalogService.Domain.Entities;
 using CatalogService.Domain.Entities.Validations;
 using CatalogService.Domain.Repositories;
 using CatalogService.Domain.Responses;
@@ -17,17 +18,18 @@ namespace CatalogService.API.Services
         public async Task<Response<List<Product>>> GetAllProductsAsync(int pageNumber, int pageSize)
         {
             var cacheKey = $"products_{pageNumber}_{pageSize}";
-            var cacheProduct = await _cacheService.GetAsync<List<Product>>(cacheKey);
+            var cacheProduct = await _cacheService.GetAsync<List<ProductDTO>>(cacheKey);
             if (cacheProduct is null)
             {
-                var products = await _productRepository.GetAllProductsAsync(pageSize, pageNumber);
-                if (products is null || products.Count == 0) return new Response<List<Product>>(cacheProduct, 404);
+                var products = await _productRepository.GetAllProductsAsync(pageNumber, pageSize);
+                if (products is null || products.Count == 0) return new Response<List<Product>>(null, 404);
                 await _cacheService.SetAsync(cacheKey, products);
 
                 return new Response<List<Product>>(products, 200);
             }
+            var result = cacheProduct.Select(ProductDTO.MapToEntity).ToList();
 
-            return new Response<List<Product>>(cacheProduct, 200);
+            return new Response<List<Product>>(result, 200);
         }
 
         public async Task<Response<Product>> GetProductByIdAsync(string id)
@@ -38,6 +40,8 @@ namespace CatalogService.API.Services
                 var product = await _productRepository.GetProductByIdAsync(id);
                 if (product is null) return new Response<Product>(null, 404);
                 await _cacheService.SetAsync(id, product);
+
+                return new Response<Product>(product, 200);
             }
 
             return new Response<Product>(cacheProduct);
@@ -68,10 +72,21 @@ namespace CatalogService.API.Services
             return new Response<Product>(null, 204);
         }
 
-
-        public Task<Response<Product>> UpdateProductAsync(Product product)
+        public async Task<Response<Product>> UpdateProductAsync(Product product, string id)
         {
-            throw new NotImplementedException();
+            var validationResult = ValidateEntity(new ProductValidation(), product);
+
+            if (!validationResult.IsValid)
+            {
+                var errors = string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage));
+                return new Response<Product>(null, 400, errors);
+            }
+
+            var oldProduct = await _productRepository.GetProductByIdAsync(id);
+            oldProduct.UpdateProduct(product);
+
+            await _productRepository.UpdateProductAsync(oldProduct);
+            return new Response<Product>(null, 204);
         }
 
         protected ValidationResult ValidateEntity<TV, TE>(TV validation, TE entity) where TV

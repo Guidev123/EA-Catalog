@@ -11,7 +11,14 @@ namespace CatalogService.Infrastructure.CacheStorage
         {
             var objectString = await _cache.GetStringAsync(key) ?? string.Empty;
 
-            return JsonConvert.DeserializeObject<T>(objectString);
+            var settings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.None,
+                Formatting = Formatting.None,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            };
+
+            return JsonConvert.DeserializeObject<T>(objectString, settings);
         }
 
         public async Task SetAsync<T>(string key, T data)

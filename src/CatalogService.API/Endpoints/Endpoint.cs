@@ -12,6 +12,8 @@ namespace CatalogService.API.Endpoints
             endpoints.MapGroup("api/v1/catalog")
                 .WithTags("Catalog")
                 .MapEndpoint<CreateProductEndpoint>()
+                .MapEndpoint<DeleteProductEndpoint>()
+                .MapEndpoint<UpdateProductEndpoint>()
                 .MapEndpoint<GetProductByIdEndpoint>()
                 .MapEndpoint<GetAllProductsEndpoint>();
         }

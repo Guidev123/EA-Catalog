@@ -11,18 +11,12 @@ namespace CatalogService.API.Endpoints.ProductEndpoints
     {
         public static void Map(IEndpointRouteBuilder app) => app.MapGet("/", HandleAsync).Produces<IResult>();
 
-        public static async Task<IResult> HandleAsync([FromServices] IProductService productService,
+        public static async Task<IResult> HandleAsync(IProductService productService,
                                                       [FromQuery] int pageSize = ApplicationMiddlewares.DEFAULT_PAGE_SIZE,
                                                       [FromQuery] int pageNumber = ApplicationMiddlewares.DEFAULT_PAGE_NUMBER)
         {
-            var result = await productService.GetAllProductsAsync(pageSize, pageNumber);
-            if (result.IsSuccess)
-            {
-                var product = result.Data?.Select(ProductDTO.MapFromEntity).ToList();
-                return TypedResults.Ok(new Response<List<ProductDTO>>(product));
-            }
-
-            return TypedResults.BadRequest(result);
+            var result = await productService.GetAllProductsAsync(pageNumber, pageSize);
+            return result.IsSuccess ? TypedResults.Ok(result) : TypedResults.BadRequest(result);
         }
     }
 }
