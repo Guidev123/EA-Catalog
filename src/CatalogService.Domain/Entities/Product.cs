@@ -2,9 +2,9 @@
 {
     public class Product
     {
-        public Product(Guid id, string name, string description, string image, decimal price, int quantityInStock)
+        public Product(string name, string description, string image, decimal price, int quantityInStock)
         {
-            Id = id;
+            Id = Guid.NewGuid().ToString();
             Name = name;
             Description = description;
             Image = image;
@@ -14,7 +14,7 @@
             CreatedAt = DateTime.Now;
         }
 
-        public Guid Id { get; private set; }
+        public string Id { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
         public string Image { get; private set; }

@@ -11,7 +11,7 @@ namespace CatalogService.Infrastructure.Persistence.Repositories
         public async Task<List<Product>> GetAllProductsAsync(int pageNumber, int pageSize) =>
             await _collection.Find(x => !x.IsDeleted).Skip((pageNumber - 1) * pageSize).Limit(pageSize).ToListAsync();
 
-        public async Task<Product> GetProductByIdAsync(Guid id) => await _collection.Find(c => c.Id == id).SingleOrDefaultAsync();
+        public async Task<Product> GetProductByIdAsync(string id) => await _collection.Find(c => c.Id == id).SingleOrDefaultAsync();
 
         public async Task CreateProductAsync(Product product) => await _collection.InsertOneAsync(product);
 

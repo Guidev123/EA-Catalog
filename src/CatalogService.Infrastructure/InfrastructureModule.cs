@@ -1,4 +1,5 @@
 ﻿using CatalogService.Domain.Repositories;
+using CatalogService.Infrastructure.CacheStorage;
 using CatalogService.Infrastructure.Persistence;
 using CatalogService.Infrastructure.Persistence.Repositories;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +14,7 @@ namespace CatalogService.Infrastructure
         {
             AddServices(services);
             AddMongoMiddleware(services, configuration);
+            AddRedisCache(services, configuration);
         }
         public static void AddMongoMiddleware(this IServiceCollection services, IConfiguration configuration)
         {
@@ -34,6 +36,16 @@ namespace CatalogService.Infrastructure
         public static void AddServices(this IServiceCollection services)
         {
             services.AddTransient<IProductRepository, ProductRepository>();
+        }
+
+        public static void AddRedisCache(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddStackExchangeRedisCache(op =>
+            {
+                op.InstanceName = configuration["CacheDataSettings:InstanceName"];
+                op.Configuration = configuration["CacheDataSettings:Configuration"];
+            });
+            services.AddTransient<ICacheService, CacheService>();
         }
     }
 }
