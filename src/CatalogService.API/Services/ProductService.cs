@@ -19,33 +19,32 @@ namespace CatalogService.API.Services
         {
             var cacheKey = $"products_{pageNumber}_{pageSize}";
             var cacheProduct = await _cacheService.GetAsync<List<GetAllProductsDTO>>(cacheKey);
-            if (cacheProduct is null)
+            if (cacheProduct is not null)
             {
-                var products = await _productRepository.GetAllProductsAsync(pageNumber, pageSize);
-                if (products is null || products.Count == 0) return new Response<List<Product>>(null, 404);
-                await _cacheService.SetAsync(cacheKey, products);
-
-                return new Response<List<Product>>(products, 200);
+                var result = cacheProduct.Select(GetAllProductsDTO.MapToEntity).ToList();
+                return new Response<List<Product>>(result, 200);
             }
-            var result = cacheProduct.Select(GetAllProductsDTO.MapToEntity).ToList();
 
-            return new Response<List<Product>>(result, 200);
+            var products = await _productRepository.GetAllProductsAsync(pageNumber, pageSize);
+            if (products is null || products.Count == 0) return new Response<List<Product>>(null, 404);
+            await _cacheService.SetAsync(cacheKey, products);
+
+            return new Response<List<Product>>(products, 200);
         }
 
         public async Task<Response<Product>> GetProductByIdAsync(string id)
         {
             var cacheProduct = await _cacheService.GetAsync<ProductDTO>(id);
-            if (cacheProduct is null)
-            {
-                var product = await _productRepository.GetProductByIdAsync(id);
-                if (product is null) return new Response<Product>(null, 404);
-                await _cacheService.SetAsync(id, product);
 
-                return new Response<Product>(product, 200);
-            }
-            var result = ProductDTO.MapToEntity(cacheProduct);
+            if (cacheProduct is not null)
+                return new Response<Product>(ProductDTO.MapToEntity(cacheProduct));
 
-            return new Response<Product>(result);
+            var product = await _productRepository.GetProductByIdAsync(id);
+            if (product is null) return new Response<Product>(null, 404);
+
+            await _cacheService.SetAsync(id, product);
+
+            return new Response<Product>(product, 200);
         }
 
         public async Task<Response<Product>> CreateProductAsync(Product product)
