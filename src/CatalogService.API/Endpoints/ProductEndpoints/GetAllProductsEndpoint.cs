@@ -1,18 +1,20 @@
-﻿using CatalogService.API.Middlewares;
-using CatalogService.Domain.Services;
+﻿using CatalogService.API.DTOs;
+using CatalogService.API.Middlewares;
+using CatalogService.API.Responses;
+using CatalogService.API.UseCases.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CatalogService.API.Endpoints.ProductEndpoints
 {
     public class GetAllProductsEndpoint : IEndpoint
     {
-        public static void Map(IEndpointRouteBuilder app) => app.MapGet("/", HandleAsync).Produces<IResult>();
+        public static void Map(IEndpointRouteBuilder app) => app.MapGet("/", HandleAsync).Produces<List<Response<ProductDTO>>>();
 
-        public static async Task<IResult> HandleAsync(IProductService productService,
+        public static async Task<IResult> HandleAsync(IProductUseCase productUseCase,
                                                       [FromQuery] int pageSize = ApplicationMiddlewares.DEFAULT_PAGE_SIZE,
                                                       [FromQuery] int pageNumber = ApplicationMiddlewares.DEFAULT_PAGE_NUMBER)
         {
-            var result = await productService.GetAllProductsAsync(pageNumber, pageSize);
+            var result = await productUseCase.GetAllProductsAsync(pageNumber, pageSize);
             return result.IsSuccess ? TypedResults.Ok(result) : TypedResults.BadRequest(result);
         }
     }

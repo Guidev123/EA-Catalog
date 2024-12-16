@@ -1,5 +1,5 @@
-﻿using CatalogService.API.Services;
-using CatalogService.Domain.Services;
+﻿using CatalogService.API.UseCases;
+using CatalogService.API.UseCases.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -21,7 +21,7 @@ namespace CatalogService.API.Middlewares
 
         public static void RegisterServices(this WebApplicationBuilder builder)
         {
-            builder.Services.AddTransient<IProductService, ProductService>();
+            builder.Services.AddTransient<IProductUseCase, ProductUseCase>();
         }
 
         public static void AddDocumentationConfig(this WebApplicationBuilder builder)
