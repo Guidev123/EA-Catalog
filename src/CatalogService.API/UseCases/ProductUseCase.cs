@@ -56,7 +56,7 @@ namespace CatalogService.API.UseCases
             var validationResult = ValidateEntity(new ProductValidation(), product);
 
             if (!validationResult.IsValid)
-                return new Response<ProductDTO>(null, 400, ResponseMessages.VALID_OPERATION.GetDescription(), GetAllErrors(validationResult));
+                return new Response<ProductDTO>(null, 400, ResponseMessages.INVALID_OPERATION.GetDescription(), GetAllErrors(validationResult));
 
             await _productRepository.CreateProductAsync(product);
             return new Response<ProductDTO>(null, 201, ResponseMessages.VALID_OPERATION.GetDescription());
