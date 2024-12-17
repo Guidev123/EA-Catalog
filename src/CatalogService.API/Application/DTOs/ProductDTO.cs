@@ -1,4 +1,4 @@
-﻿namespace CatalogService.API.DTOs
+﻿namespace CatalogService.API.Application.DTOs
 {
     public record ProductDTO(string Name, string Description, string Image, decimal Price, int QuantityInStock)
     {

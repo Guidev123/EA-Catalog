@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CatalogService.API.Responses.Messages
+namespace CatalogService.API.Application.Responses.Messages
 {
     public enum ResponseMessages
     {

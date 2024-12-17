@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace CatalogService.API.Responses
+namespace CatalogService.API.Application.Responses
 {
     public class Response<TData>
     {

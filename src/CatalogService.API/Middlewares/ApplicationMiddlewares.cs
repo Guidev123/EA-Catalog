@@ -1,5 +1,5 @@
-﻿using CatalogService.API.UseCases;
-using CatalogService.API.UseCases.Interfaces;
+﻿using CatalogService.API.Application.UseCases;
+using CatalogService.API.Application.UseCases.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;

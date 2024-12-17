@@ -1,7 +1,7 @@
-﻿using CatalogService.API.DTOs;
+﻿using CatalogService.API.Application.DTOs;
 using CatalogService.Domain.Entities;
 
-namespace CatalogService.API.Mappers
+namespace CatalogService.API.Application.Mappers
 {
     public static class ProductMappers
     {
