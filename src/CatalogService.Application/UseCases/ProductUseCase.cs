@@ -1,16 +1,16 @@
-﻿using CatalogService.API.Application.DTOs;
-using CatalogService.API.Application.Mappers;
-using CatalogService.API.Application.Responses;
-using CatalogService.API.Application.Responses.Messages;
-using CatalogService.API.Application.UseCases.Interfaces;
+﻿using CatalogService.Application.DTOs;
+using CatalogService.Application.Mappers;
+using CatalogService.Application.Responses;
+using CatalogService.Application.Responses.Messages;
+using CatalogService.Application.Storage;
+using CatalogService.Application.UseCases.Interfaces;
 using CatalogService.Domain.Entities;
 using CatalogService.Domain.Entities.Validations;
 using CatalogService.Domain.Repositories;
-using CatalogService.Infrastructure.CacheStorage;
 using FluentValidation;
 using FluentValidation.Results;
 
-namespace CatalogService.API.Application.UseCases
+namespace CatalogService.Application.UseCases
 {
     public class ProductUseCase(IProductRepository productRepository, ICacheService cacheService) : IProductUseCase
     {

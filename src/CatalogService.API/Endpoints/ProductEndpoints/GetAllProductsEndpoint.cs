@@ -1,7 +1,7 @@
-﻿using CatalogService.API.Application.DTOs;
-using CatalogService.API.Application.Responses;
-using CatalogService.API.Application.UseCases.Interfaces;
-using CatalogService.API.Middlewares;
+﻿using CatalogService.API.Middlewares;
+using CatalogService.Application.DTOs;
+using CatalogService.Application.Responses;
+using CatalogService.Application.UseCases.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CatalogService.API.Endpoints.ProductEndpoints

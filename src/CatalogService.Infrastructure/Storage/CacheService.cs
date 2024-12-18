@@ -1,7 +1,8 @@
-﻿using Microsoft.Extensions.Caching.Distributed;
+﻿using CatalogService.Application.Storage;
+using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 
-namespace CatalogService.Infrastructure.CacheStorage
+namespace CatalogService.Infrastructure.Storage
 {
     public class CacheService(IDistributedCache cache) : ICacheService
     {

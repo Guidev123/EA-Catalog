@@ -1,8 +1,8 @@
-﻿using CatalogService.API.Application.DTOs;
-using CatalogService.API.Application.Responses;
+﻿using CatalogService.Application.DTOs;
+using CatalogService.Application.Responses;
 using CatalogService.Domain.Entities;
 
-namespace CatalogService.API.Application.UseCases.Interfaces
+namespace CatalogService.Application.UseCases.Interfaces
 {
     public interface IProductUseCase
     {

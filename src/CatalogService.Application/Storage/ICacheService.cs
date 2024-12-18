@@ -1,4 +1,4 @@
-﻿namespace CatalogService.Infrastructure.CacheStorage
+﻿namespace CatalogService.Application.Storage
 {
     public interface ICacheService
     {

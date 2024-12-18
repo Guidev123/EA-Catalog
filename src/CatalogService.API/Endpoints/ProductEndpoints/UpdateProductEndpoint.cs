@@ -1,7 +1,7 @@
-﻿using CatalogService.API.Application.DTOs;
-using CatalogService.API.Application.Mappers;
-using CatalogService.API.Application.Responses;
-using CatalogService.API.Application.UseCases.Interfaces;
+﻿using CatalogService.Application.DTOs;
+using CatalogService.Application.Mappers;
+using CatalogService.Application.Responses;
+using CatalogService.Application.UseCases.Interfaces;
 
 namespace CatalogService.API.Endpoints.ProductEndpoints
 {

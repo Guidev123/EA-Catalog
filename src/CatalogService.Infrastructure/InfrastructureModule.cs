@@ -1,7 +1,9 @@
-﻿using CatalogService.Domain.Repositories;
-using CatalogService.Infrastructure.CacheStorage;
+﻿using Azure.Storage.Blobs;
+using CatalogService.Application.Storage;
+using CatalogService.Domain.Repositories;
 using CatalogService.Infrastructure.Persistence;
 using CatalogService.Infrastructure.Persistence.Repositories;
+using CatalogService.Infrastructure.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
@@ -12,7 +14,7 @@ namespace CatalogService.Infrastructure
     {
         public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            AddServices(services);
+            AddServices(services, configuration);
             AddMongoMiddleware(services, configuration);
             AddRedisCache(services, configuration);
         }
@@ -33,9 +35,11 @@ namespace CatalogService.Infrastructure
             });
         }
 
-        public static void AddServices(this IServiceCollection services)
+        public static void AddServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddSingleton<IBlobService, BlobService>();
+            services.AddSingleton(_ => new BlobServiceClient(configuration.GetSection("BlobStorageConfig")["Connection"]));
         }
 
         public static void AddRedisCache(this IServiceCollection services, IConfiguration configuration)
