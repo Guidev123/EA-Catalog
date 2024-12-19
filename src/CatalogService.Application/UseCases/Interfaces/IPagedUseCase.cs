@@ -2,11 +2,11 @@
 using FluentValidation;
 using FluentValidation.Results;
 
-namespace CatalogService.Application.UseCases
+namespace CatalogService.Application.UseCases.Interfaces
 {
-    public interface IUseCase<I, O>
+    public interface IPagedUseCase<I, O>
     {
-        Task<Response<O>> HandleAsync(I input);
+        Task<PagedResponse<O>> HandleAsync(I input);
         string[] GetAllErrors(ValidationResult validationResult);
         ValidationResult ValidateEntity<TV, TE>(TV validation, TE entity) where TV
                 : AbstractValidator<TE> where TE : class;

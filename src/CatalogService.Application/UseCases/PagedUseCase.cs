@@ -3,9 +3,9 @@ using CatalogService.Application.UseCases.Interfaces;
 
 namespace CatalogService.Application.UseCases
 {
-    public abstract class UseCase<I, O> : BaseUseCase, IUseCase<I, O>
+    public abstract class PagedUseCase<I, O> : BaseUseCase, IPagedUseCase<I, O>
     {
-        public virtual Task<Response<O>> HandleAsync(I input) =>
+        public virtual Task<PagedResponse<O>> HandleAsync(I input) =>
             throw new NotImplementedException();
     }
 }

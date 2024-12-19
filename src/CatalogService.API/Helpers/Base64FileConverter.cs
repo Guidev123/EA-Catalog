@@ -18,7 +18,16 @@ namespace CatalogService.API.Helpers
                 base64String = base64String[(commaIndex + 1)..];
             }
 
-            byte[] imageBytes = Convert.FromBase64String(base64String);
+            byte[]? imageBytes;
+
+            try
+            {
+                imageBytes = Convert.FromBase64String(base64String);
+            }
+            catch
+            {
+                return new Response<IFormFile>(null, 400, "Your image is in invalid format");
+            }
 
             string extension = GetFileExtensionFromMimeType(mimeType);
 

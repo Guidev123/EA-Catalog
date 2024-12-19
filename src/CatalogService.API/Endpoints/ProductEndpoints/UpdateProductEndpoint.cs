@@ -1,6 +1,6 @@
 ﻿using CatalogService.Application.DTOs;
 using CatalogService.Application.Responses;
-using CatalogService.Application.UseCases;
+using CatalogService.Application.UseCases.Interfaces;
 using CatalogService.Application.UseCases.Product.Update;
 using MongoDB.Bson;
 

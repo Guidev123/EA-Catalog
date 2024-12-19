@@ -9,17 +9,18 @@ namespace CatalogService.Application.UseCases.Product.GetAll
 {
     public class GetAllUseCase(ICacheService cacheService,
                                       IProductRepository productRepository)
-                                    : UseCase<GetAllRequest, List<GetProductDTO>>
+                                    : PagedUseCase<GetAllRequest, List<GetProductDTO>>
     {
         private readonly ICacheService _cacheService = cacheService;
         private readonly IProductRepository _productRepository = productRepository;
 
-        public override async Task<Response<List<GetProductDTO>>> HandleAsync(GetAllRequest input)
+        public override async Task<PagedResponse<List<GetProductDTO>>> HandleAsync(GetAllRequest input)
         {
             var cacheKey = $"products_{input.PageNumber}_{input.PageSize}";
             var cacheProduct = await _cacheService.GetAsync<List<GetProductDTO>>(cacheKey);
             if (cacheProduct is not null)
-                return new(cacheProduct, 200, ResponseMessages.VALID_OPERATION.GetDescription());
+                return new(cacheProduct.Count, cacheProduct, input.PageNumber, input.PageSize,
+                           200, ResponseMessages.VALID_OPERATION.GetDescription());
 
             var products = await _productRepository.GetAllProductsAsync(input.PageNumber, input.PageSize);
             if (products is null || products.Count == 0)
@@ -29,7 +30,8 @@ namespace CatalogService.Application.UseCases.Product.GetAll
 
             var productsResult = products.Select(ProductMappers.MapFromEntity).ToList();
 
-            return new(productsResult, 200, ResponseMessages.VALID_OPERATION.GetDescription());
+            return new(products.Count, productsResult, input.PageNumber, input.PageSize,
+                       200, ResponseMessages.VALID_OPERATION.GetDescription());
         }
     }
 }
