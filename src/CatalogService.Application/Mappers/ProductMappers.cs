@@ -8,9 +8,9 @@ namespace CatalogService.Application.Mappers
         public static ProductDTO MapFromEntity(this ProductDTO dto) =>
             new(dto.Name, dto.Description, dto.Image, dto.Price, dto.QuantityInStock);
         public static Product MapToEntity(this ProductDTO dto) =>
-            new(dto.Name, dto.Description, dto.Image, dto.Price, dto.QuantityInStock);
+            new(dto.Name, dto.Description, dto.Price, dto.QuantityInStock);
 
-        public static ProductDTO MapFromEntity(Product entity) =>
-            new(entity.Name, entity.Description, entity.Image, entity.Price, entity.QuantityInStock);
+        public static GetProductDTO MapFromEntity(Product entity) =>
+            new(entity.Name, entity.Description, entity.ImageBlobId, entity.Price, entity.QuantityInStock);
     }
 }

@@ -1,11 +1,12 @@
 ﻿using CatalogService.Domain.Entities;
+using MongoDB.Bson;
 
 namespace CatalogService.Domain.Repositories
 {
     public interface IProductRepository
     {
         Task<List<Product>> GetAllProductsAsync(int pageNumber, int pageSize);
-        Task<Product> GetProductByIdAsync(string id);
+        Task<Product> GetProductByIdAsync(ObjectId id);
         Task CreateProductAsync(Product product);
         Task UpdateProductAsync(Product product);
     }

@@ -27,7 +27,6 @@ namespace CatalogService.API.Middlewares
         public static void AddDocumentationConfig(this WebApplicationBuilder builder)
         {
             builder.Services.AddEndpointsApiExplorer();
-
             builder.Services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo()
@@ -84,13 +83,13 @@ namespace CatalogService.API.Middlewares
                     ValidIssuer = builder.Configuration["JsonWebTokenData:Issuer"]
                 };
             });
-            builder.Services.AddAuthorizationBuilder()
-                .AddPolicy("ADM", policy => policy.RequireRole("ADM"));
+            builder.Services.AddAuthorizationBuilder();
 
         }
 
         public static void UseSecurity(this WebApplication app)
         {
+            app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
         }
