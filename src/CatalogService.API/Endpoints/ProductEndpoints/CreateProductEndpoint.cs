@@ -1,18 +1,25 @@
-﻿using CatalogService.Application.DTOs;
+﻿using CatalogService.API.Helpers;
+using CatalogService.Application.DTOs;
 using CatalogService.Application.Responses;
 using CatalogService.Application.UseCases.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 
 namespace CatalogService.API.Endpoints.ProductEndpoints
 {
     public class CreateProductEndpoint : IEndpoint
     {
         public static void Map(IEndpointRouteBuilder app) => app.MapPost("/", HandleAsync).Produces<Response<ProductDTO>>();
-        public static async Task<IResult> HandleAsync([FromForm] ProductDTO productDTO,
-                                                      [FromServices] IProductUseCase productUseCase)
+        public static async Task<IResult> HandleAsync(ProductDTO productDTO,
+                                                      IProductUseCase productUseCase)
         {
+            var imageFile = Base64FileConverter.ConvertBase64ToIFormFile(productDTO.ImageBase64);
+            if (imageFile.Data is null || !imageFile.IsSuccess) return TypedResults.BadRequest(imageFile);
+
+            productDTO.Image = imageFile.Data;
             var result = await productUseCase.CreateProductAsync(productDTO);
-            return result.IsSuccess ? TypedResults.Created() : TypedResults.BadRequest(result);
+            return result.IsSuccess
+                ? TypedResults.Created(result.Message)
+                : TypedResults.BadRequest(result);
         }
+
     }
 }

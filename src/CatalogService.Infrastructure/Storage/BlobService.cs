@@ -23,7 +23,7 @@ namespace CatalogService.Infrastructure.Storage
             var fileId = Guid.NewGuid();
             var blobClient = containerClient.GetBlobClient(fileId.ToString());
 
-            await blobClient.UploadAsync(stream, new BlobHttpHeaders { ContentType = contentType });
+            await blobClient.UploadAsync(stream, new BlobHttpHeaders { ContentType = contentType }, cancellationToken: cancellationToken);
 
             return fileId;
         }

@@ -19,9 +19,6 @@ namespace CatalogService.Domain.Entities.Validations
                 .NotEmpty().WithMessage("The Description field cannot be empty.")
                 .MinimumLength(10).WithMessage("The Description field must be at least 10 characters long")
                 .MaximumLength(500).WithMessage("The Description field cannot exceed 500 characters");
-
-            RuleFor(x => x.ImageBlobId)
-                .NotEmpty().WithMessage("The ImageBlobId field cannot be empty");
         }
     }
 }

@@ -65,7 +65,7 @@ namespace CatalogService.Application.UseCases
             if (!validationResult.IsValid)
                 return new(null, 400, ResponseMessages.INVALID_OPERATION.GetDescription(), GetAllErrors(validationResult));
 
-            product.SetImageBlobId(await UploadImage(productDTO.Image));
+            product.SetImageBlobId(await UploadImage(productDTO.Image!));
             await _productRepository.CreateProductAsync(product);
 
             return new(null, 201, ResponseMessages.VALID_OPERATION.GetDescription());
