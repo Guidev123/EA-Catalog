@@ -1,17 +1,20 @@
 ﻿using CatalogService.Application.DTOs;
-using CatalogService.Application.Mappers;
 using CatalogService.Application.Responses;
-using CatalogService.Application.UseCases.Interfaces;
+using CatalogService.Application.UseCases;
+using CatalogService.Application.UseCases.Product.Update;
 using MongoDB.Bson;
 
 namespace CatalogService.API.Endpoints.ProductEndpoints
 {
     public class UpdateProductEndpoint : IEndpoint
     {
-        public static void Map(IEndpointRouteBuilder app) => app.MapPut("/{id}", HandleAsync).Produces<Response<ProductDTO>>();
-        public static async Task<IResult> HandleAsync(IProductUseCase productUseCase, ProductDTO productDTO, ObjectId id)
+        public static void Map(IEndpointRouteBuilder app) =>
+            app.MapPut("/{id}", HandleAsync).Produces<Response<ProductDTO>>();
+        public static async Task<IResult> HandleAsync(IUseCase<UpdateRequest, ProductDTO> productUseCase,
+                                                      ProductDTO productDTO,
+                                                      ObjectId id)
         {
-            var result = await productUseCase.UpdateProductAsync(productDTO.MapToEntity(), id);
+            var result = await productUseCase.HandleAsync(new(id, productDTO));
             return result.IsSuccess ? TypedResults.NoContent() : TypedResults.BadRequest(result);
         }
     }

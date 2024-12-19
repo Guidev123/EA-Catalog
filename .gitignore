@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 /src/CatalogService.API/appsettings.json
 /containers/
+/containers/blob_storage/data/__azurite_db_blob_extent__.json
+/containers/blob_storage/data/__azurite_db_blob__.json
