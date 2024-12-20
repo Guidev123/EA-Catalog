@@ -22,7 +22,7 @@ namespace CatalogService.Application.UseCases.Product.Create
             if (!validationResult.IsValid)
                 return new(null, 400, ResponseMessages.INVALID_OPERATION.GetDescription(), GetAllErrors(validationResult));
 
-            product.SetImageBlobId(await UploadImage(input.Image!));
+            product.SetImageBloUrl(await UploadImage(input.Image!));
             await _productRepository.CreateProductAsync(product);
 
             return new(null, 201, ResponseMessages.VALID_OPERATION.GetDescription());

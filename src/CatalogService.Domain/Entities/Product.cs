@@ -19,21 +19,21 @@ namespace CatalogService.Domain.Entities
         public ObjectId Id { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
-        public string? ImageBlobId { get; private set; } = string.Empty;
+        public string? ImageUrl { get; private set; } = string.Empty;
         public DateTime CreatedAt { get; private set; }
         public decimal Price { get; private set; }
         public int QuantityInStock { get; private set; }
         public bool IsDeleted { get; private set; }
         public void SetProductAsDeleted() => IsDeleted = true;
 
-        public void SetImageBlobId(string imageBlobId) => ImageBlobId = imageBlobId;    
+        public void SetImageBloUrl(string imageUrl) => ImageUrl = imageUrl;    
 
         public void UpdateProduct(Product product)
         {
             Name = product.Name;
             Description = product.Description;
             Price = product.Price;
-            ImageBlobId = product.ImageBlobId;
+            ImageUrl = product.ImageUrl;
             QuantityInStock = product.QuantityInStock;
         }
 
@@ -43,7 +43,7 @@ namespace CatalogService.Domain.Entities
             Id = id;
             Name = name;
             Description = description;
-            ImageBlobId = image;
+            ImageUrl = image;
             Price = price;
             QuantityInStock = quantityInStock;
             IsDeleted = false;

@@ -16,7 +16,7 @@ namespace CatalogService.Infrastructure.Storage
             await blobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken);
         }
 
-        public async Task<Guid> UploadAsync(Stream stream, string contentType, CancellationToken cancellationToken = default)
+        public async Task<string> UploadAsync(Stream stream, string contentType, CancellationToken cancellationToken = default)
         {
             var containerClient = blob.GetBlobContainerClient(CONTAINER_NAME);
 
@@ -25,7 +25,7 @@ namespace CatalogService.Infrastructure.Storage
 
             await blobClient.UploadAsync(stream, new BlobHttpHeaders { ContentType = contentType }, cancellationToken: cancellationToken);
 
-            return fileId;
+            return blobClient.Uri.ToString();
         }
     }
 }

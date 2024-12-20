@@ -11,6 +11,6 @@ namespace CatalogService.Application.Mappers
             new(dto.Name, dto.Description, dto.Price, dto.QuantityInStock);
 
         public static GetProductDTO MapFromEntity(Product entity) =>
-            new(entity.Name, entity.Description, entity.ImageBlobId!, entity.Price, entity.QuantityInStock);
+            new(entity.Name, entity.Description, entity.ImageUrl!, entity.Price, entity.QuantityInStock);
     }
 }
