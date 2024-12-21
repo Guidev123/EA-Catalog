@@ -1,5 +1,5 @@
+using CatalogService.API.Configurations;
 using CatalogService.API.Endpoints;
-using CatalogService.API.Middlewares;
 using CatalogService.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);

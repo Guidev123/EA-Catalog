@@ -3,9 +3,9 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 
-namespace CatalogService.API.Middlewares
+namespace CatalogService.API.Configurations
 {
-    public static class SecurityTokenMiddleware
+    public static class SecurityTokenConfig
     {
         public static void AddDocumentationConfig(this WebApplicationBuilder builder)
         {
