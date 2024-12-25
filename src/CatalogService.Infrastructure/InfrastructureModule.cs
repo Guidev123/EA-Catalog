@@ -37,7 +37,7 @@ namespace CatalogService.Infrastructure
 
         public static void AddServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddSingleton<IBlobService, BlobService>();
             services.AddSingleton(_ => new BlobServiceClient(configuration.GetSection("BlobStorageConfig")["Connection"]));
         }
