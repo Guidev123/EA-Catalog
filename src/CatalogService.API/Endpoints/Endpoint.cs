@@ -1,4 +1,4 @@
-﻿using CatalogService.API.Endpoints.ProductEndpoints;
+﻿using CatalogService.API.Endpoints.Products;
 
 namespace CatalogService.API.Endpoints
 {

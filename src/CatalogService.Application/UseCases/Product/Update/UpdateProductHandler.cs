@@ -2,15 +2,16 @@
 using CatalogService.Application.Mappers;
 using CatalogService.Application.Responses;
 using CatalogService.Application.Responses.Messages;
+using CatalogService.Application.UseCases.Interfaces;
 using CatalogService.Domain.Entities.Validations;
 using CatalogService.Domain.Repositories;
 
 namespace CatalogService.Application.UseCases.Product.Update
 {
-    public class UpdateUseCase(IProductRepository productRepository) : UseCase<UpdateRequest, ProductDTO>
+    public class UpdateProductHandler(IProductRepository productRepository) : Handler, IUseCase<UpdateProductRequest, ProductDTO>
     {
         private readonly IProductRepository _productRepository = productRepository;
-        public override async Task<Response<ProductDTO>> HandleAsync(UpdateRequest input)
+        public async Task<Response<ProductDTO>> HandleAsync(UpdateProductRequest input)
         {
             var product = input.Product.MapToEntity();
 

@@ -21,11 +21,11 @@ namespace CatalogService.Application
 
         public static void AddUseCases(this IServiceCollection services)
         {
-            services.AddTransient<IUseCase<ProductDTO, ProductDTO>, CreateUseCase>();
-            services.AddTransient<IUseCase<ObjectId, ProductDTO>, DeleteUseCase>();
-            services.AddTransient<IUseCase<ObjectId, GetProductDTO>, GetByIdUseCase>();
-            services.AddTransient<IUseCase<UpdateRequest, ProductDTO>, UpdateUseCase>();
-            services.AddTransient<IPagedUseCase<GetAllRequest, List<GetProductDTO>>, GetAllUseCase>();
+            services.AddTransient<IUseCase<ProductDTO, ProductDTO>, CreateProductHandler>();
+            services.AddTransient<IUseCase<ObjectId, ProductDTO>, DeleteProductHandler>();
+            services.AddTransient<IUseCase<ObjectId, GetProductDTO>, GetProductByIdHandler>();
+            services.AddTransient<IUseCase<UpdateProductRequest, ProductDTO>, UpdateProductHandler>();
+            services.AddTransient<IPagedUseCase<GetAllProductsRequest, List<GetProductDTO>>, GetAllProductsHandler>();
         }
     }
 }

@@ -1,15 +1,16 @@
 ﻿using CatalogService.Application.DTOs;
 using CatalogService.Application.Responses;
 using CatalogService.Application.Responses.Messages;
+using CatalogService.Application.UseCases.Interfaces;
 using CatalogService.Domain.Repositories;
 using MongoDB.Bson;
 
 namespace CatalogService.Application.UseCases.Product.Delete
 {
-    public class DeleteUseCase(IProductRepository productRepository) : UseCase<ObjectId, ProductDTO>
+    public class DeleteProductHandler(IProductRepository productRepository) : Handler, IUseCase<ObjectId, ProductDTO>
     {
         private readonly IProductRepository _productRepository = productRepository;
-        public override async Task<Response<ProductDTO>> HandleAsync(ObjectId id)
+        public async Task<Response<ProductDTO>> HandleAsync(ObjectId id)
         {
             var product = await _productRepository.GetProductByIdAsync(id);
             if (product is null)

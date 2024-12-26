@@ -3,18 +3,19 @@ using CatalogService.Application.Mappers;
 using CatalogService.Application.Responses;
 using CatalogService.Application.Responses.Messages;
 using CatalogService.Application.Storage;
+using CatalogService.Application.UseCases.Interfaces;
 using CatalogService.Domain.Repositories;
 using MongoDB.Bson;
 
 namespace CatalogService.Application.UseCases.Product.GetById
 {
-    public class GetByIdUseCase(ICacheService cacheService,
+    public class GetProductByIdHandler(ICacheService cacheService,
                                 IProductRepository productRepository)
-                              : UseCase<ObjectId, GetProductDTO>
+                              : Handler, IUseCase<ObjectId, GetProductDTO>
     {
         private readonly ICacheService _cacheService = cacheService;
         private readonly IProductRepository _productRepository = productRepository;
-        public override async Task<Response<GetProductDTO>> HandleAsync(ObjectId id)
+        public async Task<Response<GetProductDTO>> HandleAsync(ObjectId id)
         {
             var cacheProduct = await _cacheService.GetAsync<GetProductDTO>(id.ToString());
 

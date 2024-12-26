@@ -1,8 +1,8 @@
 ﻿namespace CatalogService.Application.UseCases.Product.GetAll
 {
-    public class GetAllRequest
+    public class GetAllProductsRequest
     {
-        public GetAllRequest(int pageNumber, int pageSize)
+        public GetAllProductsRequest(int pageNumber, int pageSize)
         {
             PageNumber = pageNumber;
             PageSize = pageSize;

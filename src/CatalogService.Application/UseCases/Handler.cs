@@ -3,7 +3,7 @@ using FluentValidation.Results;
 
 namespace CatalogService.Application.UseCases
 {
-    public abstract class BaseUseCase
+    public abstract class Handler
     {
         public string[] GetAllErrors(ValidationResult validationResult) =>
             validationResult.Errors.Select(e => $"{e.PropertyName}: {e.ErrorMessage}").ToArray();

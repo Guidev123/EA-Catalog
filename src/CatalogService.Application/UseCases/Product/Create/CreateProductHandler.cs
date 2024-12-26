@@ -3,17 +3,18 @@ using CatalogService.Application.Mappers;
 using CatalogService.Application.Responses;
 using CatalogService.Application.Responses.Messages;
 using CatalogService.Application.Storage;
+using CatalogService.Application.UseCases.Interfaces;
 using CatalogService.Domain.Entities.Validations;
 using CatalogService.Domain.Repositories;
 using Microsoft.AspNetCore.Http;
 
 namespace CatalogService.Application.UseCases.Product.Create
 {
-    public class CreateUseCase(IProductRepository productRepository, IBlobService blob) : UseCase<ProductDTO, ProductDTO>
+    public class CreateProductHandler(IProductRepository productRepository, IBlobService blob) : Handler, IUseCase<ProductDTO, ProductDTO>
     {
         private readonly IProductRepository _productRepository = productRepository;
         private readonly IBlobService _blob = blob;
-        public override async Task<Response<ProductDTO>> HandleAsync(ProductDTO input)
+        public async Task<Response<ProductDTO>> HandleAsync(ProductDTO input)
         {
             var product = input.MapToEntity();
 

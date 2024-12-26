@@ -3,9 +3,9 @@ using MongoDB.Bson;
 
 namespace CatalogService.Application.UseCases.Product.Update
 {
-    public class UpdateRequest
+    public class UpdateProductRequest
     {
-        public UpdateRequest(ObjectId id, ProductDTO product)
+        public UpdateProductRequest(ObjectId id, ProductDTO product)
         {
             Id = id;
             Product = product;

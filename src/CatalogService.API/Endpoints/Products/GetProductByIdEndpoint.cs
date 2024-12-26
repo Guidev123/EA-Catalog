@@ -3,7 +3,7 @@ using CatalogService.Application.Responses;
 using CatalogService.Application.UseCases.Interfaces;
 using MongoDB.Bson;
 
-namespace CatalogService.API.Endpoints.ProductEndpoints
+namespace CatalogService.API.Endpoints.Products
 {
     public class GetProductByIdEndpoint : IEndpoint
     {

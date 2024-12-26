@@ -4,13 +4,13 @@ using CatalogService.Application.UseCases.Interfaces;
 using CatalogService.Application.UseCases.Product.Update;
 using MongoDB.Bson;
 
-namespace CatalogService.API.Endpoints.ProductEndpoints
+namespace CatalogService.API.Endpoints.Products
 {
     public class UpdateProductEndpoint : IEndpoint
     {
         public static void Map(IEndpointRouteBuilder app) =>
             app.MapPut("/{id}", HandleAsync).Produces<Response<ProductDTO>>();
-        public static async Task<IResult> HandleAsync(IUseCase<UpdateRequest, ProductDTO> productUseCase,
+        public static async Task<IResult> HandleAsync(IUseCase<UpdateProductRequest, ProductDTO> productUseCase,
                                                       ProductDTO productDTO,
                                                       ObjectId id)
         {

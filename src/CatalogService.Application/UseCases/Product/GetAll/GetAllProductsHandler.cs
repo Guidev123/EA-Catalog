@@ -3,18 +3,19 @@ using CatalogService.Application.Mappers;
 using CatalogService.Application.Responses;
 using CatalogService.Application.Responses.Messages;
 using CatalogService.Application.Storage;
+using CatalogService.Application.UseCases.Interfaces;
 using CatalogService.Domain.Repositories;
 
 namespace CatalogService.Application.UseCases.Product.GetAll
 {
-    public class GetAllUseCase(ICacheService cacheService,
+    public class GetAllProductsHandler(ICacheService cacheService,
                                       IProductRepository productRepository)
-                                    : PagedUseCase<GetAllRequest, List<GetProductDTO>>
+                                    : Handler, IPagedUseCase<GetAllProductsRequest, List<GetProductDTO>>
     {
         private readonly ICacheService _cacheService = cacheService;
         private readonly IProductRepository _productRepository = productRepository;
 
-        public override async Task<PagedResponse<List<GetProductDTO>>> HandleAsync(GetAllRequest input)
+        public async Task<PagedResponse<List<GetProductDTO>>> HandleAsync(GetAllProductsRequest input)
         {
             var cacheKey = $"products_{input.PageNumber}_{input.PageSize}";
             var cacheProduct = await _cacheService.GetAsync<List<GetProductDTO>>(cacheKey);
