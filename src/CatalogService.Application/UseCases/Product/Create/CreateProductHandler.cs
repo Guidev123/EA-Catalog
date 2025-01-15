@@ -10,11 +10,11 @@ using Microsoft.AspNetCore.Http;
 
 namespace CatalogService.Application.UseCases.Product.Create
 {
-    public class CreateProductHandler(IProductRepository productRepository, IBlobService blob) : Handler, IUseCase<ProductDTO, ProductDTO>
+    public class CreateProductHandler(IProductRepository productRepository, IBlobService blob) : Handler, IUseCase<ProductDTO, string?>
     {
         private readonly IProductRepository _productRepository = productRepository;
         private readonly IBlobService _blob = blob;
-        public async Task<Response<ProductDTO>> HandleAsync(ProductDTO input)
+        public async Task<Response<string?>> HandleAsync(ProductDTO input)
         {
             var product = input.MapToEntity();
 
@@ -26,7 +26,7 @@ namespace CatalogService.Application.UseCases.Product.Create
             product.SetImageBlobUrl(await UploadImage(input.Image!));
             await _productRepository.CreateProductAsync(product);
 
-            return new(null, 201, ResponseMessages.VALID_OPERATION.GetDescription());
+            return new(product.Id.ToString(), 201, ResponseMessages.VALID_OPERATION.GetDescription());
         }
 
         private async Task<string> UploadImage(IFormFile formFile)

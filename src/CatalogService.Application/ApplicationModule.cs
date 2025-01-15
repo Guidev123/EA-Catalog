@@ -21,7 +21,7 @@ namespace CatalogService.Application
 
         public static void AddUseCases(this IServiceCollection services)
         {
-            services.AddTransient<IUseCase<ProductDTO, ProductDTO>, CreateProductHandler>();
+            services.AddTransient<IUseCase<ProductDTO, string?>, CreateProductHandler>();
             services.AddTransient<IUseCase<ObjectId, ProductDTO>, DeleteProductHandler>();
             services.AddTransient<IUseCase<ObjectId, GetProductDTO>, GetProductByIdHandler>();
             services.AddTransient<IUseCase<UpdateProductRequest, ProductDTO>, UpdateProductHandler>();

@@ -10,7 +10,7 @@ namespace CatalogService.API.Endpoints.Products
         public static void Map(IEndpointRouteBuilder app) =>
             app.MapPost("/", HandleAsync).Produces<Response<ProductDTO>>();
         public static async Task<IResult> HandleAsync(ProductDTO productDTO,
-                                                      IUseCase<ProductDTO, ProductDTO> productUseCase)
+                                                      IUseCase<ProductDTO, string?> productUseCase)
         {
             var imageFile = Base64FileConverter.ConvertBase64ToIFormFile(productDTO.ImageBase64);
             if (imageFile.Data is null || !imageFile.IsSuccess) return TypedResults.BadRequest(imageFile);
@@ -18,7 +18,7 @@ namespace CatalogService.API.Endpoints.Products
             productDTO.Image = imageFile.Data;
             var result = await productUseCase.HandleAsync(productDTO);
             return result.IsSuccess
-                ? TypedResults.Created(result.Message)
+                ? TypedResults.Created($"/{result.Data}", result)
                 : TypedResults.BadRequest(result);
         }
 
