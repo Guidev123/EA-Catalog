@@ -26,7 +26,7 @@ namespace CatalogService.Domain.Entities
         public bool IsDeleted { get; private set; }
         public void SetProductAsDeleted() => IsDeleted = true;
 
-        public void SetImageBloUrl(string imageUrl) => ImageUrl = imageUrl;    
+        public void SetImageBlobUrl(string imageUrl) => ImageUrl = imageUrl;    
 
         public void UpdateProduct(Product product)
         {

@@ -23,7 +23,7 @@ namespace CatalogService.Application.UseCases.Product.Create
             if (!validationResult.IsValid)
                 return new(null, 400, ResponseMessages.INVALID_OPERATION.GetDescription(), GetAllErrors(validationResult));
 
-            product.SetImageBloUrl(await UploadImage(input.Image!));
+            product.SetImageBlobUrl(await UploadImage(input.Image!));
             await _productRepository.CreateProductAsync(product);
 
             return new(null, 201, ResponseMessages.VALID_OPERATION.GetDescription());
@@ -33,9 +33,7 @@ namespace CatalogService.Application.UseCases.Product.Create
         {
             using Stream stream = formFile.OpenReadStream();
 
-            var filedId = await _blob.UploadAsync(stream, formFile.ContentType);
-
-            return filedId.ToString();
+            return await _blob.UploadAsync(stream, formFile.ContentType);
         }
     }
 }
