@@ -21,12 +21,12 @@ namespace CatalogService.Application.UseCases.Product.Create
             var validationResult = ValidateEntity(new ProductValidation(), product);
 
             if (!validationResult.IsValid)
-                return new(null, 400, ResponseMessages.INVALID_OPERATION.GetDescription(), GetAllErrors(validationResult));
+                return new(false, 400, null, ResponseMessages.INVALID_OPERATION.GetDescription(), GetAllErrors(validationResult));
 
             product.SetImageBlobUrl(await UploadImage(input.Image!));
             await _productRepository.CreateProductAsync(product);
 
-            return new(product.Id.ToString(), 201, ResponseMessages.VALID_OPERATION.GetDescription());
+            return new(true, 201, product.Id.ToString(), ResponseMessages.VALID_OPERATION.GetDescription());
         }
 
         private async Task<string> UploadImage(IFormFile formFile)

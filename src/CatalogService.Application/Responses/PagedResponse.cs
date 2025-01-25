@@ -7,13 +7,14 @@ namespace CatalogService.Application.Responses
         [JsonConstructor]
         public PagedResponse(
             int totalCount,
+            bool isSuccess,
             TData? data = default,
             int currentPage = 1,
             int pageSize = ApplicationModule.DEFAULT_PAGE_SIZE,
             int code = 200,
             string? message = null,
             string[]? errors = null)
-            : base(data, code, message, errors)
+            : base(isSuccess, code, data, message, errors)
         {
             Data = data;
             TotalCount = totalCount;
@@ -22,11 +23,12 @@ namespace CatalogService.Application.Responses
         }
 
         public PagedResponse(
+            bool isSuccess,
             TData? data,
             int code = 200,
             string? message = null,
             string[]? errors = null)
-            : base(data, code, message, errors)
+            : base(isSuccess, code, data, message, errors)
         {
         }
 

@@ -15,7 +15,7 @@ namespace CatalogService.API.Endpoints.Products
             var result = await productUseCase.HandleAsync(id);
 
             if (result.IsSuccess && result.Data is not null)
-                return TypedResults.Ok(new Response<GetProductDTO>(result.Data));
+                return TypedResults.Ok(new Response<GetProductDTO>(true, 200, result.Data));
 
             return TypedResults.BadRequest(result);
         }

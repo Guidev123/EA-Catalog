@@ -20,15 +20,15 @@ namespace CatalogService.Application.UseCases.Product.GetById
             var cacheProduct = await _cacheService.GetAsync<GetProductDTO>(id.ToString());
 
             if (cacheProduct is not null)
-                return new(cacheProduct);
+                return new(true, 200, cacheProduct);
 
             var product = await _productRepository.GetProductByIdAsync(id);
             var productResult = ProductMappers.MapFromEntity(product);
-            if (product is null) return new(null, 404, ResponseMessages.INVALID_OPERATION.GetDescription());
+            if (product is null) return new(false, 404, null, ResponseMessages.INVALID_OPERATION.GetDescription());
 
             await _cacheService.SetAsync(id.ToString(), product);
 
-            return new(productResult, 200, ResponseMessages.VALID_OPERATION.GetDescription());
+            return new(true, 200,productResult, ResponseMessages.VALID_OPERATION.GetDescription());
         }
     }
 }

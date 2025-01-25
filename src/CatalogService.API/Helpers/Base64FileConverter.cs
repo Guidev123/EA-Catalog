@@ -26,13 +26,13 @@ namespace CatalogService.API.Helpers
             }
             catch
             {
-                return new Response<IFormFile>(null, 400, "Your image is in invalid format");
+                return new Response<IFormFile>(false, 400, null, "Your image is in invalid format");
             }
 
             string extension = GetFileExtensionFromMimeType(mimeType);
 
             if (string.IsNullOrWhiteSpace(extension))
-                return new(null, 400, "Your image is in invalid format");
+                return new(false, 400, null, "Your image is in invalid format");
 
             fileName ??= $"image-{Guid.NewGuid()}{extension}";
             var stream = new MemoryStream(imageBytes);
@@ -46,7 +46,7 @@ namespace CatalogService.API.Helpers
                 ContentType = mimeType
             };
 
-            return new(file);
+            return new(true, 200, file);
         }
 
         private static string GetFileExtensionFromMimeType(string mimeType) =>

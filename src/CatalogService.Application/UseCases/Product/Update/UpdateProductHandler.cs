@@ -18,13 +18,13 @@ namespace CatalogService.Application.UseCases.Product.Update
             var validationResult = ValidateEntity(new ProductValidation(), product);
 
             if (!validationResult.IsValid)
-                return new(null, 400, ResponseMessages.VALID_OPERATION.GetDescription(), GetAllErrors(validationResult));
+                return new(true, 400, null, ResponseMessages.VALID_OPERATION.GetDescription(), GetAllErrors(validationResult));
 
             var oldProduct = await _productRepository.GetProductByIdAsync(input.Id);
             oldProduct.UpdateProduct(product);
 
             await _productRepository.UpdateProductAsync(oldProduct);
-            return new(null, 204);
+            return new(true, 204, null);
         }
     }
 }

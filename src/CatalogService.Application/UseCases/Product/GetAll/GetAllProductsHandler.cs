@@ -20,18 +20,18 @@ namespace CatalogService.Application.UseCases.Product.GetAll
             var cacheKey = $"products_{input.PageNumber}_{input.PageSize}";
             var cacheProduct = await _cacheService.GetAsync<List<GetProductDTO>>(cacheKey);
             if (cacheProduct is not null)
-                return new(cacheProduct.Count, cacheProduct, input.PageNumber, input.PageSize,
+                return new(cacheProduct.Count, true, cacheProduct, input.PageNumber, input.PageSize,
                            200, ResponseMessages.VALID_OPERATION.GetDescription());
 
             var products = await _productRepository.GetAllProductsAsync(input.PageNumber, input.PageSize);
             if (products is null || products.Count == 0)
-                return new(null, 404, ResponseMessages.INVALID_OPERATION.GetDescription());
+                return new(false, null, 404, ResponseMessages.INVALID_OPERATION.GetDescription());
 
             await _cacheService.SetAsync(cacheKey, products);
 
             var productsResult = products.Select(ProductMappers.MapFromEntity).ToList();
 
-            return new(products.Count, productsResult, input.PageNumber, input.PageSize,
+            return new(products.Count, true, productsResult, input.PageNumber, input.PageSize,
                        200, ResponseMessages.VALID_OPERATION.GetDescription());
         }
     }
