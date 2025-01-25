@@ -1,38 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-
-namespace CatalogService.Application.Responses
+﻿namespace CatalogService.Application.Responses
 {
-    public class Response<TData>
+    public class Response<TData>(
+    TData? data,
+    int code = Response<TData>.DEFAULT_STATUS_CODE,
+    string? message = null,
+    string[]? errors = null)
     {
-        private readonly int _code;
+        public const int DEFAULT_STATUS_CODE = 200;
 
-        [JsonConstructor]
-        public Response()
-            => _code = 200;
-
-        public Response(
-            TData? data,
-            int code = 200,
-            string? message = null,
-            string[]? errors = null)
-        {
-            Data = data;
-            Message = message;
-            _code = code;
-            Errors = errors;
-        }
-
-        public TData? Data { get; set; }
-        public string? Message { get; set; }
-        public string[]? Errors { get; set; }
-
-        [JsonIgnore]
+        public int Code { get; } = code;
+        public TData? Data { get; set; } = data;
+        public string? Message { get; } = message;
+        public string[]? Errors { get; } = errors;
         public bool IsSuccess
-            => _code is >= 200 and <= 299;
+            => Code is >= DEFAULT_STATUS_CODE and <= 299;
     }
 }
