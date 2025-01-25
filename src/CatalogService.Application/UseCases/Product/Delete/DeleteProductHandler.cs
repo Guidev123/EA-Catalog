@@ -14,11 +14,11 @@ namespace CatalogService.Application.UseCases.Product.Delete
         {
             var product = await _productRepository.GetProductByIdAsync(id);
             if (product is null)
-                return new(false, 404, null, ResponseMessages.INVALID_OPERATION.GetDescription());
+                return new(null, 404, ResponseMessages.INVALID_OPERATION.GetDescription());
 
             product.SetProductAsDeleted();
             await _productRepository.UpdateProductAsync(product);
-            return new(false, 204, null, ResponseMessages.VALID_OPERATION.GetDescription());
+            return new(null, 204, ResponseMessages.VALID_OPERATION.GetDescription());
         }
     }
 }
