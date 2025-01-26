@@ -7,10 +7,10 @@ using MongoDB.Bson;
 
 namespace CatalogService.Application.UseCases.Product.Delete
 {
-    public class DeleteProductHandler(IProductRepository productRepository) : Handler, IUseCase<ObjectId, ProductDTO>
+    public class DeleteProductHandler(IProductRepository productRepository) : Handler, IUseCase<Guid, ProductDTO>
     {
         private readonly IProductRepository _productRepository = productRepository;
-        public async Task<Response<ProductDTO>> HandleAsync(ObjectId id)
+        public async Task<Response<ProductDTO>> HandleAsync(Guid id)
         {
             var product = await _productRepository.GetProductByIdAsync(id);
             if (product is null)

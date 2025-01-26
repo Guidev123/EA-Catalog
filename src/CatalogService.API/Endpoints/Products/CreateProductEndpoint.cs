@@ -2,6 +2,7 @@
 using CatalogService.Application.DTOs;
 using CatalogService.Application.Responses;
 using CatalogService.Application.UseCases.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CatalogService.API.Endpoints.Products
 {
@@ -9,8 +10,8 @@ namespace CatalogService.API.Endpoints.Products
     {
         public static void Map(IEndpointRouteBuilder app) =>
             app.MapPost("/", HandleAsync).Produces<Response<ProductDTO>>();
-        public static async Task<IResult> HandleAsync(ProductDTO productDTO,
-                                                      IUseCase<ProductDTO, string?> productUseCase)
+        public static async Task<IResult> HandleAsync([FromBody] ProductDTO productDTO,
+                                                      [FromServices] IUseCase<ProductDTO, string?> productUseCase)
         {
             var imageFile = Base64FileConverter.ConvertBase64ToIFormFile(productDTO.ImageBase64);
             if (imageFile.Data is null || !imageFile.IsSuccess) return TypedResults.BadRequest(imageFile);

@@ -7,6 +7,7 @@ namespace CatalogService.Domain.Entities
     {
         public Product(string name, string description, decimal price, int quantityInStock)
         {
+            Id = Guid.NewGuid().ToString();
             Name = name;
             Description = description;
             Price = price;
@@ -16,7 +17,8 @@ namespace CatalogService.Domain.Entities
         }
 
         [BsonId]
-        public ObjectId Id { get; private set; }
+        [BsonRepresentation(BsonType.String)]
+        public string Id { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
         public string? ImageUrl { get; private set; } = string.Empty;
@@ -38,7 +40,7 @@ namespace CatalogService.Domain.Entities
         }
 
         // Cache Constructor
-        public Product(ObjectId id, string name, string description, string image, decimal price, int quantityInStock)
+        public Product(string id, string name, string description, string image, decimal price, int quantityInStock)
         {
             Id = id;
             Name = name;

@@ -1,6 +1,7 @@
 ﻿using CatalogService.Application.DTOs;
 using CatalogService.Application.Responses;
 using CatalogService.Application.UseCases.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 
 namespace CatalogService.API.Endpoints.Products
@@ -9,8 +10,8 @@ namespace CatalogService.API.Endpoints.Products
     {
         public static void Map(IEndpointRouteBuilder app) =>
             app.MapGet("/{id}", HandleAsync).Produces<Response<GetProductDTO>>();
-        public static async Task<IResult> HandleAsync(IUseCase<ObjectId, GetProductDTO> productUseCase,
-                                                      ObjectId id)
+        public static async Task<IResult> HandleAsync([FromServices] IUseCase<Guid, GetProductDTO> productUseCase,
+                                                      Guid id)
         {
             var result = await productUseCase.HandleAsync(id);
 

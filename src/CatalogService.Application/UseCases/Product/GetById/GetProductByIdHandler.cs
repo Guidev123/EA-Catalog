@@ -11,11 +11,11 @@ namespace CatalogService.Application.UseCases.Product.GetById
 {
     public class GetProductByIdHandler(ICacheService cacheService,
                                 IProductRepository productRepository)
-                              : Handler, IUseCase<ObjectId, GetProductDTO>
+                              : Handler, IUseCase<Guid, GetProductDTO>
     {
         private readonly ICacheService _cacheService = cacheService;
         private readonly IProductRepository _productRepository = productRepository;
-        public async Task<Response<GetProductDTO>> HandleAsync(ObjectId id)
+        public async Task<Response<GetProductDTO>> HandleAsync(Guid id)
         {
             var cacheProduct = await _cacheService.GetAsync<GetProductDTO>(id.ToString());
 

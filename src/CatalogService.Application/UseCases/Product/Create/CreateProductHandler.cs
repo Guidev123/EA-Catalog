@@ -26,7 +26,7 @@ namespace CatalogService.Application.UseCases.Product.Create
             product.SetImageBlobUrl(await UploadImage(input.Image!));
             await _productRepository.CreateProductAsync(product);
 
-            return new(product.Id.ToString(), 201, ResponseMessages.VALID_OPERATION.GetDescription());
+            return new(product.Id, 201, ResponseMessages.VALID_OPERATION.GetDescription());
         }
 
         private async Task<string> UploadImage(IFormFile formFile)
