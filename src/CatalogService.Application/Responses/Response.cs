@@ -2,19 +2,30 @@
 
 namespace CatalogService.Application.Responses
 {
-    public class Response<TData>(
-        TData? data,
-        int? code = null,
-        string? message = null,
-        string[]? errors = null)
+    public class Response<TData>
     {
         [JsonIgnore]
-        public readonly int statusCode = code ?? DEFAULT_STATUS_CODE;
+        public readonly int StatusCode;
         public const int DEFAULT_STATUS_CODE = 200;
-        public TData? Data { get; set; } = data;
-        public string? Message { get; } = message;
-        public string[]? Errors { get; } = errors;
+
+        public Response() { }
+
+        public Response(
+            TData? data,
+            int? code = null,
+            string? message = null,
+            string[]? errors = null)
+        {
+            StatusCode = code ?? DEFAULT_STATUS_CODE;
+            Data = data;
+            Message = message;
+            Errors = errors;
+        }
+
+        public TData? Data { get; set; }
+        public string? Message { get; }
+        public string[]? Errors { get; }
         public bool IsSuccess =>
-            statusCode is >= DEFAULT_STATUS_CODE and <= 299;
+            StatusCode is >= DEFAULT_STATUS_CODE and <= 299;
     }
 }
