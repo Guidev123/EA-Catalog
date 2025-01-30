@@ -1,5 +1,6 @@
 ﻿using CatalogService.API.Configurations;
 using CatalogService.Application;
+using SharedLib.Tokens.Configuration;
 
 namespace CatalogService.API.Configurations
 {
@@ -9,7 +10,8 @@ namespace CatalogService.API.Configurations
         {
             builder.Services.AddApplication();
             builder.AddDocumentationConfig();
-            builder.AddJwtConfiguration();
+            builder.Services.AddJwtConfiguration(builder.Configuration);
+            builder.Services.AddAuthorization();
         }
     }
 }
