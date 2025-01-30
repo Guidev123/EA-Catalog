@@ -4,7 +4,7 @@ namespace CatalogService.Application.Responses
 {
     public class PagedResponse<TData> : Response<TData>
     {
-        [JsonConstructor]
+        public PagedResponse() { }
         public PagedResponse(
             int totalCount,
             TData? data = default,
@@ -28,6 +28,7 @@ namespace CatalogService.Application.Responses
             string[]? errors = null)
             : base(data, code, message, errors)
         {
+
         }
 
         public int CurrentPage { get; set; }
