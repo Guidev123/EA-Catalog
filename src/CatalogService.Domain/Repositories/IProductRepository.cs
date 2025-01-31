@@ -7,6 +7,7 @@ namespace CatalogService.Domain.Repositories
     {
         Task<List<Product>> GetAllProductsAsync(int pageNumber, int pageSize);
         Task<Product> GetProductByIdAsync(Guid id);
+        Task<List<Product>> GetProductsByIdsAsync(string ids);
         Task CreateProductAsync(Product product);
         Task UpdateProductAsync(Product product);
     }

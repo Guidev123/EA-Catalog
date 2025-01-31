@@ -10,7 +10,7 @@ namespace CatalogService.API.Endpoints.Products
     public class GetAllProductsEndpoint : IEndpoint
     {
         public static void Map(IEndpointRouteBuilder app) =>
-            app.MapGet("/", HandleAsync).Produces<List<Response<ProductDTO>>>();
+            app.MapGet("/", HandleAsync).Produces<List<PagedResponse<ProductDTO>>>();
 
         public static async Task<IResult> HandleAsync([FromServices] IPagedUseCase<GetAllProductsRequest, List<GetProductDTO>> productUseCase,
                                                       [FromQuery] int pageSize = ApplicationModule.DEFAULT_PAGE_SIZE,

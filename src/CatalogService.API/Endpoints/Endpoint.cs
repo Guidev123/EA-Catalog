@@ -14,6 +14,7 @@ namespace CatalogService.API.Endpoints
                 .MapEndpoint<CreateProductEndpoint>()   
                 .MapEndpoint<DeleteProductEndpoint>()
                 .MapEndpoint<UpdateProductEndpoint>()
+                .MapEndpoint<GetProductsByIdsEndpoint>()
                 .MapEndpoint<GetProductByIdEndpoint>()
                 .MapEndpoint<GetAllProductsEndpoint>();
         }

@@ -18,5 +18,22 @@ namespace CatalogService.Infrastructure.Persistence.Repositories
         public async Task CreateProductAsync(Product product) => await _collection.InsertOneAsync(product);
 
         public async Task UpdateProductAsync(Product product) => await _collection.ReplaceOneAsync(c => c.Id == product.Id, product);
+
+        public async Task<List<Product>> GetProductsByIdsAsync(string ids)
+        {
+            var idsGuid = ids.Split(',')
+                             .Select(id => Guid.TryParse(id, out var guid) ? guid : (Guid?)null)
+                             .Where(guid => guid.HasValue)
+                             .Select(guid => guid!.Value)
+                             .ToList();
+
+            if (!idsGuid.Any()) return new List<Product>();
+
+            var filter = Builders<Product>.Filter.In(p => p.Id, idsGuid.Select(g => g.ToString()));
+            filter = Builders<Product>.Filter.And(filter, Builders<Product>.Filter.Eq(p => p.IsDeleted, false));
+
+            return await _collection.Find(filter).ToListAsync();
+        }
+
     }
 }

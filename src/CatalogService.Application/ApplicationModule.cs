@@ -4,6 +4,7 @@ using CatalogService.Application.UseCases.Product.Create;
 using CatalogService.Application.UseCases.Product.Delete;
 using CatalogService.Application.UseCases.Product.GetAll;
 using CatalogService.Application.UseCases.Product.GetById;
+using CatalogService.Application.UseCases.Product.GetByIds;
 using CatalogService.Application.UseCases.Product.Update;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
@@ -25,6 +26,7 @@ namespace CatalogService.Application
             services.AddTransient<IUseCase<Guid, ProductDTO>, DeleteProductHandler>();
             services.AddTransient<IUseCase<Guid, GetProductDTO>, GetProductByIdHandler>();
             services.AddTransient<IUseCase<UpdateProductRequest, ProductDTO>, UpdateProductHandler>();
+            services.AddTransient<IUseCase<GetByIdsRequest, List<GetProductDTO>>, GetByIdsHandler>();
             services.AddTransient<IPagedUseCase<GetAllProductsRequest, List<GetProductDTO>>, GetAllProductsHandler>();
         }
     }
