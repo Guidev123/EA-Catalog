@@ -26,7 +26,7 @@ namespace CatalogService.Application
             services.AddTransient<IUseCase<Guid, ProductDTO>, DeleteProductHandler>();
             services.AddTransient<IUseCase<Guid, GetProductDTO>, GetProductByIdHandler>();
             services.AddTransient<IUseCase<UpdateProductRequest, ProductDTO>, UpdateProductHandler>();
-            services.AddTransient<IUseCase<GetByIdsRequest, List<GetProductDTO>>, GetByIdsHandler>();
+            services.AddTransient<IUseCase<GetByIdsRequest, List<GetProductsListDTO>>, GetByIdsHandler>();
             services.AddTransient<IPagedUseCase<GetAllProductsRequest, List<GetProductDTO>>, GetAllProductsHandler>();
         }
     }

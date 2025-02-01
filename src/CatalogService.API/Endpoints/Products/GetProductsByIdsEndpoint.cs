@@ -9,10 +9,10 @@ namespace CatalogService.API.Endpoints.Products
     public class GetProductsByIdsEndpoint : IEndpoint
     {
         public static void Map(IEndpointRouteBuilder app) =>
-            app.MapGet("/list/{ids}", HandleAsync).Produces<Response<List<GetProductDTO>>>();
+            app.MapGet("/list/{ids}", HandleAsync).Produces<Response<List<GetProductsListDTO>>>();
 
         public static async Task<IResult> HandleAsync(string ids,
-                                                      [FromServices] IUseCase<GetByIdsRequest, List<GetProductDTO>> useCase)
+                                                      [FromServices] IUseCase<GetByIdsRequest, List<GetProductsListDTO>> useCase)
         {   
             var result = await useCase.HandleAsync(new(ids));
             return result.IsSuccess ? TypedResults.Ok(result) : TypedResults.BadRequest(result);
